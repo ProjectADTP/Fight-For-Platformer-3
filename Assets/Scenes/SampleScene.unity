@@ -1466,7 +1466,6 @@ GameObject:
   - component: {fileID: 455449997}
   - component: {fileID: 455449999}
   - component: {fileID: 455449998}
-  - component: {fileID: 455450000}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1532,20 +1531,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455449996}
   m_CullTransparentMesh: 1
---- !u!114 &455450000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455449996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad0e1dbae38f0ab4c81b8723349e525d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _key: 113
-  _button: {fileID: 707145873}
 --- !u!1 &465596944
 GameObject:
   m_ObjectHideFlags: 0
@@ -5189,6 +5174,7 @@ GameObject:
   - component: {fileID: 707145874}
   - component: {fileID: 707145873}
   - component: {fileID: 707145876}
+  - component: {fileID: 707145877}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5311,8 +5297,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2fcb6be00d24a4a8a8d0fed26e9dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _key: 113
+  _ability: {fileID: 1841022402}
+--- !u!114 &707145877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707145871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676c40d9c288a2c4c953e8314265ea0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _slider: {fileID: 401023641}
   _text: {fileID: 1050922147}
+  _ability: {fileID: 1841022402}
 --- !u!1 &721814684
 GameObject:
   m_ObjectHideFlags: 0
@@ -7335,8 +7336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cooldown: 4
   Duration: 6
-  Button: {fileID: 707145873}
-  _radius: 150
+  _radius: 15
   _damageOverTime: 5
 --- !u!1 &1858195544
 GameObject:

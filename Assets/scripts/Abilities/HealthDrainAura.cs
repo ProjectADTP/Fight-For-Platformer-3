@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class HealthDrainAura : Ability
@@ -7,12 +7,13 @@ public class HealthDrainAura : Ability
     [SerializeField] private int _radius;
     [SerializeField] private int _damageOverTime;
 
-
     private EntityHealth _playerHealth;
 
     private WaitForSeconds _waitDuration;
     private WaitForSeconds _waitCooldown;
     private WaitForSeconds _waitDamage = new WaitForSeconds(1);
+
+    public event Action<float, float> Activated;
 
     private float _diameterToRadius = 2;
     private float _scale;
@@ -29,20 +30,10 @@ public class HealthDrainAura : Ability
         _scale = _playerHealth.transform.localScale.x;
     }
 
-    protected override void TryActivateAbility()
+    public override void TryActivateAbility()
     {
         if (IsReady)
         {
-            if (Button.TryGetComponent<HealthDrainButton>(out HealthDrainButton healthDrainButton))
-            {
-                healthDrainButton.SetDuration(Duration, Cooldown);
-            }
-
-            if (TryGetComponent<AbilityDrawer>(out AbilityDrawer abilityDrawer))
-            {
-                abilityDrawer.SetDuration(Duration);
-            }
-
             StartCoroutine(ActivateAbility());
         }
     }
@@ -50,6 +41,8 @@ public class HealthDrainAura : Ability
     private IEnumerator ActivateAbility()
     {
         IsReady = false;
+
+        Activated?.Invoke(Duration, Cooldown);
 
         StartCoroutine(DrainHealthCoroutine());
 
@@ -70,18 +63,18 @@ public class HealthDrainAura : Ability
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius * _scale / _diameterToRadius);
 
-            Enemy closestEnemy = null;
+            Enemy closestEnemy;
             EntityHealth closestHealth = null;
 
             float closestDistance = Mathf.Infinity;
 
             foreach (Collider2D hit in hits)
             {
-                if (hit.TryGetComponent<Enemy>(out Enemy enemy))
+                if (hit.TryGetComponent(out Enemy enemy))
                 {
-                    if (enemy.TryGetComponent<EntityHealth>(out EntityHealth enemyHealth))
+                    if (enemy.TryGetComponent(out EntityHealth enemyHealth))
                     {
-                        float distance = Vector2.Distance(transform.position, hit.transform.position);
+                        float distance = Vector3Extensions.SqrDistance(transform.position, hit.transform.position);
 
                         if (distance < closestDistance)
                         {
